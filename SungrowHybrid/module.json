@@ -1,0 +1,12 @@
+{
+    "id": "{387EABED-0271-4E22-82A7-141E06B80F3C}",
+    "name": "Sungrow Hybrid",
+    "type": 3,
+    "vendor": "Sungrow",
+    "aliases": ["SH10RT", "Sungrow Wechselrichter"],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "SGH",
+    "url": "https://github.com/Pfischi-Informatik/SymconSungrow"
+}

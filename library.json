@@ -1,0 +1,12 @@
+{
+    "id": "{18B0534E-AFB2-402C-B1F9-359FD9F962B7}",
+    "author": "Dominik Pfister",
+    "name": "Sungrow Hybrid",
+    "url": "https://github.com/Pfischi-Informatik/SymconSungrow",
+    "compatibility": {
+        "version": "7.1"
+    },
+    "version": "1.0",
+    "build": 1,
+    "date": 0
+}

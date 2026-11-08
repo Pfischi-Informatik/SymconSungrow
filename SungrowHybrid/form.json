@@ -1,0 +1,18 @@
+{
+    "elements": [
+        { "type": "ValidationTextBox", "name": "Host", "caption": "IP-Adresse (WiNet-S)" },
+        { "type": "NumberSpinner", "name": "Port", "caption": "Port", "minimum": 1, "maximum": 65535 },
+        { "type": "NumberSpinner", "name": "Unit", "caption": "Modbus Unit-ID", "minimum": 0, "maximum": 247 },
+        { "type": "NumberSpinner", "name": "Interval", "caption": "Abfrageintervall", "suffix": "s", "minimum": 5, "maximum": 3600 },
+        { "type": "CheckBox", "name": "AllowWrite", "caption": "Schreiben auf den Wechselrichter erlauben" }
+    ],
+    "actions": [
+        { "type": "Button", "caption": "Jetzt aktualisieren", "onClick": "SGH_Update($id);" }
+    ],
+    "status": [
+        { "code": 102, "icon": "active", "caption": "Verbunden" },
+        { "code": 104, "icon": "inactive", "caption": "IP-Adresse fehlt" },
+        { "code": 200, "icon": "error", "caption": "Keine Verbindung zum Wechselrichter" },
+        { "code": 201, "icon": "error", "caption": "Register konnte nicht gelesen werden" }
+    ]
+}
