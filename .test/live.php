@@ -100,11 +100,13 @@ foreach ([['MaxSoC', 30.0], ['MinSoC', 60.0], ['EMSMode', 1], ['ForcedCmd', 99],
     assert($threw, "$i=$v muss abgelehnt werden");
 }
 $m->SetProperty('AllowWrite', false);
+$m->RequestAction('EmBatteryPower', 5000.0); // darf nie werfen, auch ohne Freigabe/Verbindung
 
 if (isset($argv[1])) {
     assert($m->Update() === true, 'Abfrage');
     assert($m->status === 102, 'Status');
-    foreach (['SystemState','SoC','SoH','BatteryTemp','BatteryVoltage','BatteryCurrent','BatteryPower','BatteryCapacity','PvPower','LoadPower','MeterPower','MaxSoC','MinSoC','ReserveSoC','BackupMode','EMSMode','ForcedCmd','ExportLimit','ExportLimitMode','MaxChargePower','TotalCharge','TotalDischarge','TotalImport','TotalExport'] as $i) {
+    assert($m->GetValue('EmBatteryPower') === -$m->GetValue('BatteryPower'), 'EM-Vorzeichen');
+    foreach (['EmBatteryPower','BatteryState','SystemState','SoC','SoH','BatteryTemp','BatteryVoltage','BatteryCurrent','BatteryPower','BatteryCapacity','PvPower','LoadPower','MeterPower','MaxSoC','MinSoC','ReserveSoC','BackupMode','EMSMode','ForcedCmd','ExportLimit','ExportLimitMode','MaxChargePower','TotalCharge','TotalDischarge','TotalImport','TotalExport'] as $i) {
         echo str_pad($i, 18), var_export($m->GetValue($i), true), "\n";
     }
 }

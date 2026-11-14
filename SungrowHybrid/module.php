@@ -109,6 +109,11 @@ class SungrowHybrid extends IPSModule
                 default => $this->RegisterVariableFloat($ident, $name, $profile, $pos + 1),
             };
         }
+        // Fuer den Energie-Manager: +Laden/-Entladen, schaltbar, Aktion wird ignoriert
+        $this->RegisterVariableFloat('EmBatteryPower', 'Akku Leistung Energie-Manager (+Laden/-Entladen)', '~Watt', 100);
+        $this->EnableAction('EmBatteryPower');
+        $this->RegisterVariableString('BatteryState', 'Batterie Status', '', 101);
+
         foreach (array_keys(self::WRITE) as $ident) {
             if ($this->ReadPropertyBoolean('AllowWrite')) {
                 $this->EnableAction($ident);
@@ -128,6 +133,11 @@ class SungrowHybrid extends IPSModule
 
     public function RequestAction($Ident, $Value)
     {
+        if ($Ident === 'EmBatteryPower') {
+            // Der Energie-Manager darf "steuern", der Wechselrichter regelt selbst
+            $this->SendDebug('EnergieManager', "Vorgabe $Value ignoriert", 0);
+            return;
+        }
         if (!isset(self::WRITE[$Ident])) {
             throw new Exception("Unbekannte Aktion: $Ident");
         }
@@ -174,6 +184,9 @@ class SungrowHybrid extends IPSModule
                 $value = is_bool($value) ? $value : round($value, 3);
                 $this->SetValue($ident, $type === 'i' ? (int) $value : ($type === 'b' ? (bool) $value : (float) $value));
             }
+            $charge = -$this->GetValue('BatteryPower');
+            $this->SetValue('EmBatteryPower', $charge);
+            $this->SetValue('BatteryState', $charge > 0 ? 'Laden' : ($charge < 0 ? 'Entladen' : 'Standby'));
             $this->SetStatus(102);
             return true;
         });

@@ -17,6 +17,14 @@ Tages- und Gesamtzaehler.
 
 Vorzeichen: Batterie `+` Entladen / `-` Laden, Netz `+` Bezug / `-` Einspeisung.
 
+## Energie-Manager
+
+`Akku Leistung Energie-Manager` liefert `+` Laden / `-` Entladen und ist schaltbar, damit der
+Energie-Manager den Akku als steuerbar erkennt. Vorgaben werden ignoriert, der Wechselrichter
+regelt selbst. Im Energie-Manager: Speicher "Controlled indirectly by omitting energy",
+Level-Variable `Batterie SoC`, Leistung `Akku Leistung Energie-Manager`,
+"Charge is positive, Feed-In is negative".
+
 ## Schreiben
 
 Standardmaessig gesperrt. Erst mit dem Haken "Schreiben erlauben" sind diese Variablen
@@ -42,7 +50,7 @@ Jeder Schreibvorgang wird zurueckgelesen. Unveraenderte Werte werden nicht gesch
 ## Test
 
 ```bash
-php -d zend.assertions=1 -d assert.exception=1 test/live.php [IP]
+php -d zend.assertions=1 -d assert.exception=1 .test/live.php [IP]
 ```
 
 Ohne IP nur Umrechnung und Grenzwerte, mit IP zusaetzlich eine reine Leseabfrage.
